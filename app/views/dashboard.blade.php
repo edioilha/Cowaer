@@ -1,10 +1,6 @@
 @extends('template')
-
-
-@stop
+@section('title')   {{trans('geral.titulo_dash')}}  @stop
 @section('content')
-
-
 <!-- ALERTA DE MENSAGEM -->
 <!-- Alert favor seguir esse padrao e importar a folha de estilo -->
 <!-- 
@@ -22,8 +18,8 @@
 <div class="row">
 	<div id="breadcrumb" class="col-xs-12">
 		<ol class="breadcrumb">
-			<li><a href="index.html">Home</a></li>
-			<li><a href="#">Dashboard</a></li>
+			<li><a href="index.html">{{trans('geral.breadcrumb_home')}}</a></li>
+			<li><a href="#">{{trans('geral.titulo_dash')}}</a></li>
 		</ol>
 	</div>
 </div>
@@ -31,7 +27,7 @@
 <!--Start Dashboard 1-->
 <div id="dashboard-header" class="row">
 	<div class="col-xs-10 col-sm-2">
-		<h3>HELLO, DASHBOARD!</h3>
+		<h3>{{strtoupper(Session::get('nome_user'))}}</h3>
 	</div>
 	<div class="col-xs-2 col-sm-1 col-sm-offset-1">
 		<div id="social" class="row">
@@ -426,6 +422,10 @@
 </div>
 <!--End Dashboard 2 -->
 <div style="height: 40px;"></div>
+<script src="{{url('plugins/jQuery-Knob/jquery.knob.js')}}" type="text/javascript" ></script>
+<script src="{{url('plugins/sparkline/jquery.sparkline.min.js')}}" type="text/javascript" ></script>
+<script src="{{url('plugins/morris/morris.min.js')}}" type="text/javascript" ></script>
+<script src="{{url('plugins/raphael/raphael-min.js')}}" type="text/javascript" ></script>
 <script type="text/javascript">
 // Array for random data for Sparkline
 var sparkline_arr_1 = SparklineTestData();
@@ -434,12 +434,9 @@ var sparkline_arr_3 = SparklineTestData();
 $(document).ready(function() {
 	// Make all JS-activity for dashboard
 	DashboardTabChecker();
-	// Load Knob plugin and run callback for draw Knob charts for dashboard(tab-servers)
-	LoadKnobScripts(DrawKnobDashboard);
-	// Load Sparkline plugin and run callback for draw Sparkline charts for dashboard(top of dashboard + plot in tables)
-	LoadSparkLineScript(DrawSparklineDashboard);
-	// Load Morris plugin and run callback for draw Morris charts for dashboard
-	LoadMorrisScripts(MorrisDashboard);
+	
+	DrawSparklineDashboard();
+	MorrisDashboard();
 	// Make beauty hover in table
 	$("#ticker-table").beautyHover();
 });

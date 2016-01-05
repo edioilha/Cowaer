@@ -11,20 +11,20 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('login.login');
+Route::get('/','LoginController@index');
+Route::post('auth','LoginController@autenticar');
+Route::get('auth',function(){
+	return View::make('assets.404');
 });
+Route::group(array('prefix' => 'panel-control','before' => 'logado'),function(){
 
-Route::group(array('prefix' => 'panel-control'),function(){
-
-/*-------------------------------------------------------------------------------------
-| As duas rotas abaixo são acessiveis apenas para quem é administrador
---------------------------------------------------------------------------------------*/
-	// Route::controller('/admin','AdminController');
-	
-	Route::controller('/dashboard', "DashboardController");
-	Route::controller('/fazenda', "FazendaController");
+	Route::get('dashboard','DashboardController@getDashboard');
+	Route::get('logout','DashboardController@getLogout');
+	Route::get('perfil','DashboardController@getPerfil');
+	Route::post('perfil','DashboardController@postPerfil');
+	Route::controller('/usuario', "UsuarioController");
+	Route::controller('/bebidas', "BebidaController");
+	Route::controller('/variedades', "VariedadeController");
 	// Route::controller('/historico','HistoricoController');
 
 

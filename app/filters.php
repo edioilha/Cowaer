@@ -29,7 +29,7 @@ Route::filter('logado', function()
 	* não retorna nada por isso o teste é igual a vazio ''
 	*/
 	
-	if(Session::has('code_user') == '')
+	if(Session::has('cod_user') == '')
 		return Redirect::to("/");
 });
 /*

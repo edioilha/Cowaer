@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'forge',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'duchefdb',
+			'username'  => 'ducheff',
+			'password'  => 'ducheff',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="utf-8">
-    <title>Cowaer</title>
-    <meta name="description" content="Sistem de Gestão e Controle de gado bovino">
+    
+    <title>@yield('title')</title>
+    <meta name="description" content="Sistem de Gestão e Controle de rebanho bovino">
     <meta name="author" content="TechMob">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{url('plugins/bootstrap/bootstrap.css')}}" rel="stylesheet">
     <link href="{{url('plugins/jquery-ui/jquery-ui.min.css')}}" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
-    <link href="{{url('plugins/fancybox/jquery.fancybox.css')}}" rel="stylesheet">
-    <link href="{{url('plugins/fullcalendar/fullcalendar.css')}}" rel="stylesheet">
-    <link href="{{url('plugins/xcharts/xcharts.min.css')}}" rel="stylesheet">
-    <link href="{{url('plugins/select2/select2.css')}}" rel="stylesheet">
+    <link href="{{url('css/font-awesome.min.css')}}" rel="stylesheet">
+    
     <link href="{{url('css/style.css')}}" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,10 +26,13 @@
     <script src="{{url('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{url('plugins/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{url('plugins/justified-gallery/jquery.justifiedgallery.min.js')}}"></script>
-    <script src="{{url('plugins/tinymce/tinymce.min.js')}}"></script>
-    <script src="{{url('plugins/tinymce/jquery.tinymce.min.js')}}"></script>
     <!-- All functions for this theme + document.ready processing -->
+    <script>
+    $(document).ready(function(){
+
+      $(document).tooltip({selector:'*[data-toggle="tooltip"]'});
+    });
+    </script> 
     <script src="{{url('js/devoops.js')}}"></script>
   </head>
 <body>
@@ -41,32 +41,17 @@
   <canvas id="canvas"></canvas>
   <i class="fa fa-lock" id="screen_unlock"></i>
 </div>
-<div id="modalbox">
-  <div class="devoops-modal">
-    <div class="devoops-modal-header">
-      <div class="modal-header-name">
-        <span>Basic table</span>
-      </div>
-      <div class="box-icons">
-        <a class="close-link">
-          <i class="fa fa-times"></i>
-        </a>
-      </div>
-    </div>
-    <div class="devoops-modal-inner">
-    </div>
-    <div class="devoops-modal-bottom">
-    </div>
-  </div>
-</div>
 <header class="navbar">
   <div class="container-fluid expanded-panel">
     <div class="row">
+      <!-- Divisão da Logomarca -->
       <div id="logo" class="col-xs-12 col-sm-2">
-        <a href="{{url('/')}}">Cowaer</a>
+        <img class="pull-left" src="{{url('/img/logo.png')}}" alt="Logo DuCheff" width="40">
+        <a href="{{url('/')}}">DuCheff</a>
       </div>
       <div id="top-panel" class="col-xs-12 col-sm-10">
         <div class="row">
+          <!-- Caixa de pesquisa a direita Nav-Bar -->
           <div class="col-xs-8 col-sm-4">
             <a href="#" class="show-sidebar">
               <i class="fa fa-bars"></i>
@@ -76,6 +61,7 @@
               <i class="fa fa-search"></i>
             </div>
           </div>
+              <!-- Fim da caixa de pesquisa -->
           <div class="col-xs-4 col-sm-8 top-panel-right">
             <ul class="nav navbar-nav pull-right panel-menu">
               <li class="hidden-xs">
@@ -84,64 +70,34 @@
                   <span class="badge">7</span>
                 </a>
               </li>
-              <li class="hidden-xs">
-                <a class="ajax-link" href="ajax/calendar.html">
-                  <i class="fa fa-calendar"></i>
-                  <span class="badge">7</span>
-                </a>
-              </li>
-              <li class="hidden-xs">
-                <a href="ajax/page_messages.html" class="ajax-link">
-                  <i class="fa fa-envelope"></i>
-                  <span class="badge">7</span>
-                </a>
-              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle account" data-toggle="dropdown">
                   <div class="avatar">
-                    <img src="img/avatar.jpg" class="img-rounded" alt="avatar" />
+                    <img src="{{url('img/avatar.png')}}" class="img-rounded" alt="avatar" />
                   </div>
                   <i class="fa fa-angle-down pull-right"></i>
                   <div class="user-mini pull-right">
-                    <span class="welcome">Welcome,</span>
-                    <span>Jane Devoops</span>
+                    <span class="welcome">{{trans('geral.hello')}},</span>
+                    <span>{{Session::get('nome_user')}}</span>
                   </div>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
-                    <a href="#">
+                    <a href="{{url('panel-control/perfil')}}">
                       <i class="fa fa-user"></i>
-                      <span>Profile</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ajax/page_messages.html" class="ajax-link">
-                      <i class="fa fa-envelope"></i>
-                      <span>Messages</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ajax/gallery_simple.html" class="ajax-link">
-                      <i class="fa fa-picture-o"></i>
-                      <span>Albums</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="ajax/calendar.html" class="ajax-link">
-                      <i class="fa fa-tasks"></i>
-                      <span>Tasks</span>
+                      <span>{{trans('geral.menu_perfil')}}</span>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i class="fa fa-cog"></i>
-                      <span>Settings</span>
+                      <i class="fa fa-bell"></i>
+                      <span>{{trans('geral.menu_notif')}}</span>
                     </a>
                   </li>
                   <li>
-                    <a href="#">
+                    <a href="{{url('panel-control/logout')}}">
                       <i class="fa fa-power-off"></i>
-                      <span>Logout</span>
+                      <span>{{trans('geral.menu_sair')}}</span>
                     </a>
                   </li>
                 </ul>
@@ -160,44 +116,31 @@
     <div id="sidebar-left" class="col-xs-2 col-sm-2">
       <ul class="nav main-menu">
         <li>
-          <a href="{{url('/dashboard')}}" class="active ajax-link">
+          <a href="{{url('panel-control/dashboard')}}" class="{{((Session::get('flag') == 1) ? 'active':'')}}">
             <i class="fa fa-dashboard"></i>
-            <span class="hidden-xs">Dashboard</span>
+            <span class="hidden-xs">{{trans('geral.menu_side_dashboard')}}</span>
           </a>
         </li>
+        @if(Session::get('nivel_user') == 1)
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle">
-            <i class="fa fa-picture-o"></i>
-            <span class="hidden-xs">Fazenda</span>
+          <a href="{{url('panel-control/usuario')}}" class="{{((Session::get('flag') == 2) ? 'active':'')}}">
+            <i class="fa fa-user"></i>
+            <span class="hidden-xs">{{trans('geral.menu_side_usuario')}}</span>
           </a>
-          <ul class="dropdown-menu">
-            <li><a href="{{url('panel-control/fazenda/cadastrar')}}"><i class="fa fa-plus"></i> Cadastrar Fazenda</a></li>
-            <li><a class="ajax-link" href="#"><i class="fa fa-search"></i> Pesquisar Fazenda</a></li>
-            <li><a class="ajax-link" href="#"><i class="fa fa-file-o"></i> Relatório Fazenda</a></li>
-          </ul>
         </li>
+        @endif
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle">
-            <i class="fa fa-bar-chart-o"></i>
-            <span class="hidden-xs">Charts</span>
+          <a href="#" class="dropdown-toggle {{((Session::get('flag') > 2 && (Session::get('flag') <= 7)) ? 'active':'')}}">
+            <i class="fa fa-cutlery"></i>
+             <span class="hidden-xs">{{trans('geral.menu_side_cardapio')}}</span>
+             <i class="fa fa-caret-down pull-right"></i>
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
-            <li><a class="ajax-link" href="ajax/charts_flot.html">Flot Charts</a></li>
-            <li><a class="ajax-link" href="ajax/charts_google.html">Google Charts</a></li>
-            <li><a class="ajax-link" href="ajax/charts_morris.html">Morris Charts</a></li>
-            <li><a class="ajax-link" href="ajax/charts_coindesk.html">CoinDesk realtime</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle">
-            <i class="fa fa-table"></i>
-             <span class="hidden-xs">Tables</span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="ajax-link" href="ajax/tables_simple.html">Simple Tables</a></li>
-            <li><a class="ajax-link" href="ajax/tables_datatables.html">Data Tables</a></li>
-            <li><a class="ajax-link" href="ajax/tables_beauty.html">Beauty Tables</a></li>
+          <ul class="dropdown-menu" style="{{((Session::get('flag') > 2 && (Session::get('flag') <= 7)) ? 'display:block;':'display:none;')}}">
+            <li><a  href="{{url('panel-control/bebidas')}}" class="{{((Session::get('flag') == 3) ? 'active':'')}}">{{trans('geral.menu_side_cardapio_bebidas')}} <i class="fa fa-angle-right pull-right"></i></a></li>
+            <li><a  href="{{url('panel-control/variedades')}}" class="{{((Session::get('flag') == 4) ? 'active':'')}}">{{trans('geral.menu_side_cardapio_variedades')}} <i class="fa fa-angle-right pull-right"></i></a></li>
+            <li><a  href="{{url('')}}">{{trans('geral.menu_side_cardapio_guarnicoes')}} <i class="fa fa-angle-right pull-right"></i></a></li>
+            <li><a  href="{{url('')}}">{{trans('geral.menu_side_cardapio_molhos')}} <i class="fa fa-angle-right pull-right"></i></a></li>
+            <li><a  href="{{url('')}}">{{trans('geral.menu_side_cardapio_tipos')}} <i class="fa fa-angle-right pull-right"></i></a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -349,5 +292,9 @@
   </div>
 </div>
 <!--End Container-->
+<!-- Get Translate File -->
+@if(App::getLocale() == 'pt-br')
+<script src="{{url('js/locale/pt_br.js')}}"></script>
+@endif
 </body>
 </html>

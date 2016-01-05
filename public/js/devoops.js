@@ -42,7 +42,48 @@ function LoadOpenLayersScript(callback){
 		}
 	}
 }
-
+//
+//  Dynamically load  jQuery Timepicker plugin
+//  homepage: http://trentrichardson.com/examples/timepicker/
+//
+function LoadTimePickerScript(callback){
+	if (!$.fn.timepicker){
+		$.getScript('plugins/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.min.js', callback);
+	}
+	else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
+//
+//  Dynamically load Bootstrap Validator Plugin
+//  homepage: https://github.com/nghuuphuoc/bootstrapvalidator
+//
+function LoadBootstrapValidatorScript(callback){
+	if (!$.fn.bootstrapValidator){
+		$.getScript('plugins/bootstrapvalidator/bootstrapValidator.min.js', callback);
+	}
+	else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
+//
+//  Dynamically load jQuery Select2 plugin
+//  homepage: https://github.com/ivaynberg/select2  v3.4.5  license - GPL2
+//
+function LoadSelect2Script(callback){
+	if (!$.fn.select2){
+		$.getScript('plugins/select2/select2.min.js', callback);
+	}
+	else {
+		if (callback && typeof(callback) === "function") {
+			callback();
+		}
+	}
+}
 //
 //  Dynamically load DataTables plugin
 //  homepage: http://datatables.net v1.9.4 license - GPL or BSD
@@ -200,24 +241,24 @@ function LoadSparkLineScript(callback){
 //
 //  Function for load content from url and put in $('.ajax-content') block
 //
-// function LoadAjaxContent(url){
-// 	$('.preloader').show();
+function LoadAjaxContent(url){
+	$('.preloader').show();
 	
-// 	$.ajax({
-// 		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
-// 		url: url,
-// 		type: 'GET',
-// 		success: function(data) {
-// 			$('#ajax-content').html(data);
-// 			$('.preloader').hide();
-// 		},
-// 		error: function (jqXHR, textStatus, errorThrown) {
-// 			alert(errorThrown);
-// 		},
-// 		dataType: "html",
-// 		async: false
-// 	});
-// }
+	$.ajax({
+		mimeType: 'text/html; charset=utf-8', // ! Need set mimeType only when run from local file
+		url: url,
+		type: 'GET',
+		success: function(data) {
+			$('#ajax-content').html(data);
+			$('.preloader').hide();
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			alert(errorThrown);
+		},
+		dataType: "html",
+		async: false
+	});
+}
 //
 //  Function maked all .box selector is draggable, to disable for concrete element add class .no-drop
 //
@@ -2065,11 +2106,11 @@ function CreateAllSliders(){
 //
 function AllTimePickers(){
 	$('#datetime_example').datetimepicker({});
-	// $('#time_example').timepicker({
-	// 	hourGrid: 4,
-	// 	minuteGrid: 10,
-	// 	timeFormat: 'hh:mm tt'
-	// });
+	$('#time_example').timepicker({
+		hourGrid: 4,
+		minuteGrid: 10,
+		timeFormat: 'hh:mm tt'
+	});
 	$('#date3_example').datepicker({ numberOfMonths: 3, showButtonPanel: true});
 	$('#date3-1_example').datepicker({ numberOfMonths: 3, showButtonPanel: true});
 	$('#date_example').datepicker({});
@@ -2259,12 +2300,8 @@ $(document).ready(function () {
 		$('div#main').toggleClass('sidebar-show');
 		setTimeout(MessagesMenuWidth, 250);
 	});
-	// var ajax_url = location.hash.replace(/^#/, '');
-	// if (ajax_url.length < 1) {
-	// 	ajax_url = 'dashboard.blade.php';
-	// }
 	
-	// LoadAjaxContent(ajax_url);
+	
 	$('.main-menu').on('click', 'a', function (e) {
 		var parents = $(this).parents('li');
 		var li = $(this).closest('li.dropdown');
@@ -2293,18 +2330,7 @@ $(document).ready(function () {
 			$(this).parents("ul.dropdown-menu").find('a').removeClass('active');
 			$(this).addClass('active')
 		}
-		if ($(this).hasClass('ajax-link')) {
-			e.preventDefault();
-			if ($(this).hasClass('add-full')) {
-				$('#content').addClass('full-content');
-			}
-			else {
-				$('#content').removeClass('full-content');
-			}
-			var url = $(this).attr('href');
-			window.location.hash = url;
-			// LoadAjaxContent(url);
-		}
+		
 		if ($(this).attr('href') == '#') {
 			e.preventDefault();
 		}
@@ -2369,7 +2395,7 @@ $(document).ready(function () {
 			}
 			var url = $(this).attr('href');
 			window.location.hash = url;
-			// LoadAjaxContent(url);
+			LoadAjaxContent(url);
 		}
 	});
 	$('#search').on('keydown', function(e){
@@ -2378,7 +2404,7 @@ $(document).ready(function () {
 			$('#content').removeClass('full-content');
 			ajax_url = 'ajax/page_search.html';
 			window.location.hash = ajax_url;
-			// LoadAjaxContent(ajax_url);
+			LoadAjaxContent(ajax_url);
 		}
 	});
 	$('#screen_unlock').on('mouseover', function(){
